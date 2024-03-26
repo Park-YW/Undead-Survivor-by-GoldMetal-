@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour
         if (!collision.CompareTag("Enemy")|| per == -1)
             return;
 
-        
+        --per;
         if (per == -1)
         {
             rigid.velocity = Vector2.zero;
