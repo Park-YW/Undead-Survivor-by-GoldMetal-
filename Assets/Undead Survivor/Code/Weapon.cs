@@ -16,11 +16,7 @@ public class Weapon : MonoBehaviour
 
     void Awake()
     {
-        player = GetComponentInParent<Player>();
-    }
-    void Start()
-    {
-        Init();
+        player = GameManager.instance.player;
     }
 
 
@@ -31,7 +27,7 @@ public class Weapon : MonoBehaviour
             case 0:
                 transform.Rotate(Vector3.back * speed * Time.deltaTime);
                 break;
-            default:
+            case 1:
                 timer += Time.deltaTime;
                 if (timer > speed)
                 {
@@ -40,7 +36,12 @@ public class Weapon : MonoBehaviour
                 }
 
                 break;
+            default:
+            break;
         }
+
+        
+
 
         //test
         if (Input.GetButtonDown("Jump"))
@@ -57,20 +58,46 @@ public class Weapon : MonoBehaviour
         {
             Positioning();
         }
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
-    public void Init()
+    public void Init(ItemData data)
     {
+
+        //basic setting
+        name = "Weapon" + data.itemId;
+        transform.parent = player.transform;
+        transform.localPosition = Vector3.zero;
+
+        //propertiy set
+        id = data.itemId;
+        damage = data.baseDamage;
+        count = data.baseCount;
+
+        for(int index = 0; index < GameManager.instance.pool.prefabs.Length; index++)
+        {
+            if(data.projectile == GameManager.instance.pool.prefabs[index]){
+                prefebId = index;
+                break;
+            }
+        }
+
         switch(id)
         {
             case 0:
                 speed = 150;
                 Positioning();
             break;
+
             default:
                 speed = 0.3f;
             break;
         }
+        Hand hand = player.hands[(int)(data.itemType)];
+        hand.spriter.sprite = data.hand;
+        hand.gameObject.SetActive(true);
+
+        player.BroadcastMessage("ApplyGear", SendMessageOptions.DontRequireReceiver);
     }
 
     void Positioning()

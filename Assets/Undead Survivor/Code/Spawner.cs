@@ -13,7 +13,7 @@ public class Spawner : MonoBehaviour
 
     void Awake()
     {
-        spawnPoint = GetComponentsInChildren<Transform>(); //ÀÚ±âÀÚ½ÅÀ» Æ÷ÇÔÇÑ´Ù
+        spawnPoint = GetComponentsInChildren<Transform>(); //ï¿½Ú±ï¿½ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñ´ï¿½
     }
 
     // Update is called once per frame
@@ -37,6 +37,7 @@ public class Spawner : MonoBehaviour
         GameObject enemy = GameManager.instance.pool.Get(0);
         enemy.transform.position = spawnPoint[Random.Range(1, spawnPoint.Length)].position;
         enemy.GetComponent<Enemy>().Init(spawnData[level]);
+        Debug.Log(this);
     }
 }
 
