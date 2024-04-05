@@ -22,7 +22,11 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
-        switch(id)
+        if (!GameManager.instance.isLive)
+        {
+            return;
+        }
+        switch (id)
         {
             case 0:
                 transform.Rotate(Vector3.back * speed * Time.deltaTime);
@@ -52,7 +56,7 @@ public class Weapon : MonoBehaviour
 
     public void LevelUp(float damage, int count)
     {
-        this.damage = damage;
+        this.damage = damage * Character.Damage;
         this.count = count;
         if (id == 0)
         {
@@ -71,8 +75,8 @@ public class Weapon : MonoBehaviour
 
         //propertiy set
         id = data.itemId;
-        damage = data.baseDamage;
-        count = data.baseCount;
+        damage = data.baseDamage * Character.Damage;
+        count = data.baseCount + (int)Character.Count;
 
         for(int index = 0; index < GameManager.instance.pool.prefabs.Length; index++)
         {
@@ -85,12 +89,12 @@ public class Weapon : MonoBehaviour
         switch(id)
         {
             case 0:
-                speed = 150;
+                speed = 150 * Character.WeaponSpeed;
                 Positioning();
             break;
 
             default:
-                speed = 0.3f;
+                speed = 0.3f * Character.WeaponRate;
             break;
         }
         Hand hand = player.hands[(int)(data.itemType)];
