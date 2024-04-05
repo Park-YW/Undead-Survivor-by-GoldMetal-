@@ -94,7 +94,8 @@ public class Enemy : MonoBehaviour
         {
             StartCoroutine(KnockBack());
             anim.SetTrigger("Hit");
-            
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Hit);
+
         }
         else
         {
@@ -106,6 +107,12 @@ public class Enemy : MonoBehaviour
 
             GameManager.instance.kill++;
             GameManager.instance.GetExp();
+
+            if(GameManager.instance.isLive)
+            {
+                AudioManager.instance.PlaySfx(AudioManager.Sfx.Dead);
+            }
+            
         }
     }
 

@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     [Header("#gamecontrol")]
     public bool isLive;
     public float gameTime = 0;
-    public float maxGameTime = 10f;
+    public float maxGameTime = 30f;
 
     [Header("#playerinfo")]
     public int playerId;
@@ -44,6 +44,9 @@ public class GameManager : MonoBehaviour
         Resume();
         EnemyCleaner.SetActive(false);
         this.gameObject.SetActive(true);
+
+        AudioManager.instance.PlayBgm(true);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Select);
     }
 
     void Update()
@@ -103,10 +106,14 @@ public class GameManager : MonoBehaviour
         uiResult.gameObject.SetActive(true);
         uiResult.Lose();
         Stop();
+        AudioManager.instance.PlayBgm(false);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Lose);
     }
     public void GameVictory()
     {
         StartCoroutine(GameVictoryRoutine());
+        AudioManager.instance.PlayBgm(false);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Win);
     }
 
     IEnumerator GameVictoryRoutine()
