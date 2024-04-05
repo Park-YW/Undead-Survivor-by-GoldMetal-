@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class AchiveManager : MonoBehaviour
 {
+    public Game
     // Start is called before the first frame update
     void Start()
-    {
+    {  
         
     }
 
