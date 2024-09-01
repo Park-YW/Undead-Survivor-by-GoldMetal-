@@ -20,9 +20,6 @@ public class PoolManager : MonoBehaviour
     public GameObject Get(int index)
     {
         GameObject select = null;
-
-        //선택한 풀 내부 비활성화 오브젝트 접근
-
         foreach (GameObject item in pools[index])
         {
             if (!item.activeSelf)
@@ -37,8 +34,6 @@ public class PoolManager : MonoBehaviour
             select = Instantiate(prefabs[index], transform);
             pools[index].Add(select);
         }
-
-
         return select;
     }
 
